@@ -108,8 +108,8 @@ Note: successUrl keep blank.
 
 | Platform | Screenshot |
 | ------------- | ------------- |
-| Android | <img height="480" src="https://github.com/bitnob/bitnob_react_native_sdk/blob/main/preview/android_checkout.png"> <img height="480" src="https://github.com/bitnob/bitnob_react_native_sdk/blob/main/preview/android_payment_success.png"> <img height="480" src="https://github.com/bitnob/bitnob_react_native_sdk/blob/main/preview/android_timeout.png"> |
-| iOS | <img height="414" src="https://github.com/bitnob/bitnob_react_native_sdk/blob/main/preview/ios_checkout.png"> <img height="414" src="https://github.com/bitnob/bitnob_react_native_sdk/blob/main/preview/ios_payment_success.png">  <img height="414" src="https://github.com/bitnob/bitnob_react_native_sdk/blob/main/preview/ios_timeout1.png"> |
+| Android | <img height="480" src="https://bitnobwhmcsplugin.s3.eu-west-2.amazonaws.com/images/android_checkout.png"> <img height="480" src="https://bitnobwhmcsplugin.s3.eu-west-2.amazonaws.com/images/android_payment_success.png"> <img height="480" src="https://bitnobwhmcsplugin.s3.eu-west-2.amazonaws.com/images/android_timeout.png"> |
+| iOS | <img height="414" src="https://bitnobwhmcsplugin.s3.eu-west-2.amazonaws.com/images/ios_checkout.png"> <img height="414" src="https://bitnobwhmcsplugin.s3.eu-west-2.amazonaws.com/images/ios_payment_success.png">  <img height="414" src="https://bitnobwhmcsplugin.s3.eu-west-2.amazonaws.com/images/ios_timeout1.png"> |
 
 # License
 ```
