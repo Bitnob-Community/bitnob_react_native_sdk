@@ -1,7 +1,7 @@
 {
-  "name": "bitnob",
+  "name": "bitnob-react-native",
   "version": "0.0.1",
-  "description": "The sdk allows user to create bitcoin checkout invoice and pay via bitcoin using lighting or onchain bitcoin wallets like bitnob wallet or BlueWallet.",
+  "description": "This SDK equips online businesses using react native with the ability to accept and process bitcoin payments via on-chain or lightning seamlessly.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

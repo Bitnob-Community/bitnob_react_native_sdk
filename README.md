@@ -1,6 +1,6 @@
-# bitnob
+# bitnob-react-native
 
-The sdk allows user to create bitcoin checkout invoice and pay via bitcoin using lighting or onchain bitcoin wallets like bitnob wallet or BlueWallet.
+This SDK equips online businesses using react native with the ability to accept and process bitcoin payments via on-chain or lightning seamlessly.
 
 ## ChangeLog
 
@@ -9,13 +9,13 @@ You can find the complete changelog [on this file](/ChangeLog.md).
 ## Install
 
 ```bash
-npm i -S bitnob
+npm i -S bitnob-react-native
 ```
 
 OR
 
 ```bash
-yarn add bitnob
+yarn add bitnob-react-native
 ```
 
 ## Platform Support
@@ -33,13 +33,13 @@ yarn add bitnob
 ## How to Use
 
 ```js
-import Bitnob from 'bitnob';
+import Bitnob from 'bitnob-react-native';
 ```
 
 
 ## Example
 ```js
-import Bitnob from 'bitnob';
+import Bitnob from 'bitnob-react-native';
 
 export default class App extends Component {
   constructor(props) {
@@ -99,6 +99,10 @@ export default class App extends Component {
 ```
 Note: successUrl keep blank.
 ```
+
+## How to get "publicKey" to use bitnob-react-native?
+
+- Please [`sign up here`](https://app.bitnob.co/accounts/signup), Then follow this [`link`](https://docs.bitnob.com/docs/api-keys) get publicKey.
 
 ## 📷 Screenshots
 
