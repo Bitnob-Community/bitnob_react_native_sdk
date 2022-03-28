@@ -30,34 +30,15 @@ yarn add bitnob
 ## ⚙️ Ios Setup
     No any requirement
 
-## Getting Started
-
-1.  Open a command line and cd to your projects root folder
-2.  In your pubspec, add an entry for bitnob to your dependencies (example below)
-3.  pub install
-
-## Installation
-
-You just need to add `bitnob` as a [dependency in your pubspec.yaml file](https://flutter.io/using-packages/).
-
-```yaml
-dependencies:
-  bitnob: ^0.0.1
-```
--Run `flutter packages get` to install the package
-
 ## How to Use
 
-```dart
-import 'package:bitnob/bitnob.dart';
+```js
+import Bitnob from 'bitnob';
 ```
 
-```dart
-final BitNob _bitNob = BitNob();
-```
 
 ## Example
-```dart
+```js
 import Bitnob from 'bitnob';
 
 export default class App extends Component {
@@ -123,8 +104,8 @@ Note: successUrl keep blank.
 
 | Platform | Screenshot |
 | ------------- | ------------- |
-| Android | <img height="480" src="https://github.com/bitnob/bitnob_flutter_sdk/blob/main/preview/android_checkout.png"> <img height="480" src="https://github.com/bitnob/bitnob_flutter_sdk/blob/main/preview/android_payment_success.png"> <img height="480" src="https://github.com/bitnob/bitnob_flutter_sdk/blob/main/preview/android_timeout.png"> |
-| iOS | <img height="414" src="https://github.com/bitnob/bitnob_flutter_sdk/blob/main/preview/ios_checkout.png"> <img height="414" src="https://github.com/bitnob/bitnob_flutter_sdk/blob/main/preview/ios_payment_success.png">  <img height="414" src="https://github.com/bitnob/bitnob_flutter_sdk/blob/main/preview/ios_timeout1.png"> |
+| Android | <img height="480" src="https://github.com/bitnob/bitnob_react_native_sdk/blob/main/preview/android_checkout.png"> <img height="480" src="https://github.com/bitnob/bitnob_react_native_sdk/blob/main/preview/android_payment_success.png"> <img height="480" src="https://github.com/bitnob/bitnob_react_native_sdk/blob/main/preview/android_timeout.png"> |
+| iOS | <img height="414" src="https://github.com/bitnob/bitnob_react_native_sdk/blob/main/preview/ios_checkout.png"> <img height="414" src="https://github.com/bitnob/bitnob_react_native_sdk/blob/main/preview/ios_payment_success.png">  <img height="414" src="https://github.com/bitnob/bitnob_react_native_sdk/blob/main/preview/ios_timeout1.png"> |
 
 # License
 ```
