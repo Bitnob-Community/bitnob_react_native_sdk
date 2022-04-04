@@ -12,15 +12,19 @@ You can find the complete changelog [on this file](/ChangeLog.md).
 npm i -S bitnob-react-native
 ```
 
-```bash
-npm i -S react-native-webview
-```
-
 OR
 
 ```bash
 yarn add bitnob-react-native
 ```
+
+## Install required dependencies
+
+```bash
+npm i -S react-native-webview
+```
+
+OR
 
 ```bash
 yarn add react-native-webview
@@ -60,7 +64,7 @@ export default class App extends Component {
   createCheckout = () => {
     return (
       <Bitnob
-        baseUrl={"https://staging-api.flowertop.xyz"}
+        baseUrl={"your base url"}
         description="test108"
         callbackUrl="test108"
         successUrl=""
@@ -68,7 +72,7 @@ export default class App extends Component {
         customerEmail="test@gmail.com"
         satoshis={2000}
         reference="test108"
-        publicKey="pk.1a593.b3b0b105da63ff7b70f3310f355ce0"
+        publicKey="your public key"
         failCallback={(fail) => {
           console.log("------fail", fail)
           this.setState({ isShowBitnob: false })
