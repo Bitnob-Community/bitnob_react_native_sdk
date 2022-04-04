@@ -2,7 +2,7 @@
   "name": "bitnob-react-native",
   "version": "0.0.1",
   "description": "This SDK equips online businesses using react native with the ability to accept and process bitcoin payments via on-chain or lightning seamlessly.",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,8 +18,5 @@
   "bugs": {
     "url": "https://github.com/bitnob/bitnob_react_native_sdk/issues"
   },
-  "homepage": "https://github.com/bitnob/bitnob_react_native_sdk#readme",
-  "dependencies": {
-    "react-native-webview": "^11.17.2"
-  }
+  "homepage": "https://github.com/bitnob/bitnob_react_native_sdk#readme"
 }
