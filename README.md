@@ -12,10 +12,18 @@ You can find the complete changelog [on this file](/ChangeLog.md).
 npm i -S bitnob-react-native
 ```
 
+```bash
+npm i -S react-native-webview
+```
+
 OR
 
 ```bash
 yarn add bitnob-react-native
+```
+
+```bash
+yarn add react-native-webview
 ```
 
 ## Platform Support
