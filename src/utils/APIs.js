@@ -44,7 +44,8 @@ const _apiCallForCheckPaymentStatus = async (baseUrl, id, callback) => {
 
 }
 
+
 export {
     _apiCallForCheckPaymentStatus,
-    _apicallForPayMent
+    _apicallForPayMent,
 }

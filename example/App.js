@@ -1,12 +1,13 @@
 import { Text, Button, View, StyleSheet, StatusBar, SafeAreaView } from 'react-native'
 import React, { Component } from 'react'
-import Bitnob from 'bitnob-react-native';
+import {Bitnob,InitiateOauth} from 'bitnob-react-native';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isShowBitnob: false
+      isShowBitnob: false,
+      isShowLogin:false
     }
   }
 
@@ -36,8 +37,31 @@ export default class App extends Component {
       />
     )
   }
+  Login = () => {
+    return (
+      <InitiateOauth
+        baseUrl={"https://staging-oauth.bitnob.co"}
+        clientId="fe2b4768b3c5afdb27b2"
+        scope="user:ln_address"
+        state="dddeee"
+        redirectUrl="https://www.google.com/"
+        failCallback={(fail) => {
+          console.log("------fail", fail)
+          this.setState({ isShowLogin: false })
+        }}
+        webViewcallback={(res) => {
+          this.setState({ isShowLogin: false })
+          console.log('------', res)
+        }}
+        successCallback={(success) => {
+          console.log("----success", success)
+            this.setState({ isShowLogin: false })
+        }}
+      />
+    )
+  }
   render() {
-    let { isShowBitnob } = this.state
+    let { isShowBitnob,isShowLogin } = this.state
     return (
       <SafeAreaView style={{ flex: 1, justifyContent: 'center' }} >
         <StatusBar backgroundColor={'transparent'} translucent={false} />
@@ -45,11 +69,23 @@ export default class App extends Component {
           isShowBitnob ?
             this.createCheckout()
             :
+            isShowLogin ?
+              this.Login()
+            :
+            <>
             <Button onPress={() => this.setState({ isShowBitnob: true })}
               style={styles.payButton}
               color={'blue'}
               title="Pay"
-            />
+                />
+                <View style={{height:10}} ></View>
+                <Button
+                  onPress={() => this.setState({ isShowLogin: true })}
+                  style={styles.payButton}
+                  color={'blue'}
+                  title="login"
+              />
+              </>
         }
 
       </SafeAreaView>
@@ -63,6 +99,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: 'blue',
     alignSelf: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
 })

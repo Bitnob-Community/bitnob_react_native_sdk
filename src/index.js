@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { _apiCallForCheckPaymentStatus, _apicallForPayMent } from './utils/APIs'
 import WebView from 'react-native-webview'
 
-export default class bitnob extends Component {
+class Bitnob extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -73,3 +73,58 @@ export default class bitnob extends Component {
         )
     }
 }
+
+class InitiateOauth extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            previewLink: "",
+            isPreviewLink: true,
+            loader: false
+        }
+    }
+    componentDidMount = () => {
+        this.setState({ loader: true })
+        const { baseUrl, scope, callbackUrl, successUrl, clientId, redirectUrl, state } = this.props
+        var url=`${baseUrl}/login?scope=${scope}&clientId=${clientId}&redirectUrl=${redirectUrl}&state=${state}`
+       this.setState({previewLink:url,loader:false})
+    }
+    
+    onNavigationStateChange = (webViewState) => {
+        if (webViewState.url.includes("?error=")) {
+            this.props.failCallback("access_denied")
+        } else if (webViewState.url.includes(this.props.redirectUrl) && !webViewState.url.includes("redirectUrl")) {
+            this.props.successCallback("success")
+        }
+  };
+
+
+    render() {
+        return (
+            <Modal visible={true} animationType={'slide'} style={{ flex: 1, justifyContent: 'center' }} >
+                {this.state.loader ?
+                    <View style={{ flex: 1, justifyContent: 'center' }} >
+                        <ActivityIndicator size="large" color="#0000ff" style={{ alignSelf: 'center' }} />
+                    </View>
+                    :
+                    <SafeAreaView style={{ flex: 1 }} >
+                        <TouchableOpacity style={{alignSelf:'flex-end',marginRight:20,marginTop:10 }} onPress={() => this.props.webViewcallback('close call')} >
+                            <Image source={require('./helper/close.png')} resizeMode={'contain'} style={{ height: 20, width: 20 }} />
+                        </TouchableOpacity>
+                        <WebView
+                            source={{ uri: this.state.previewLink }}
+                            style={{ flex: 1 }}
+                            scalesPageToFit={false}
+                            javaScriptEnabled={true}
+                            domStorageEnabled={true}
+                            startInLoadingState={false}
+                            onNavigationStateChange={this.onNavigationStateChange}
+                        />
+                    </SafeAreaView>
+                }
+            </Modal>
+        )
+    }
+}
+
+export { Bitnob,InitiateOauth };
