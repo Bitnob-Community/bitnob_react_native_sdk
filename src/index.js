@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { _apiCallForCheckPaymentStatus, _apicallForPayMent } from './utils/APIs'
 import WebView from 'react-native-webview'
 
-class Bitnob extends Component {
+class InitialCheckout extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -14,7 +14,10 @@ class Bitnob extends Component {
     }
     componentDidMount = () => {
         this.setState({ loader: true })
-        const { baseUrl, description, callbackUrl, successUrl, notificationEmail, customerEmail, satoshis, reference, publicKey, } = this.props
+        const { mode, description, callbackUrl, successUrl, notificationEmail, customerEmail, satoshis, reference, publicKey, } = this.props
+
+        let baseUrl=mode=='sandbox'?'https://sandboxapi.bitnob.co':'https://api.bitnob.co'
+        
         _apicallForPayMent(baseUrl, description, callbackUrl, successUrl, notificationEmail, customerEmail, satoshis, reference, publicKey,
             (error) => {
                 this.setState({ isPreviewLink: false, loader: false })
@@ -23,7 +26,6 @@ class Bitnob extends Component {
             (res) => {
                 if (res) {
                     this.setState({ isPreviewLink: true, })
-                    // this.props.webViewcallback(res)
                     this.setState({ previewLink: res?.data?.previewLink, loader: false })
                     this._apiCallForCheckPayment(res?.data?.id)
                 }
@@ -31,7 +33,8 @@ class Bitnob extends Component {
         )
     }
     _apiCallForCheckPayment = (id) => {
-        const { baseUrl } = this.props
+        const { mode } = this.props
+        let baseUrl = mode == 'sandbox' ? 'https://staging-oauth.bitnob.co' : 'https://staging-oauth.bitnob.co'
         let myInterval = setInterval(() => {
             if (this.state.isPreviewLink) {
                 _apiCallForCheckPaymentStatus(baseUrl, id, (res) => {
@@ -58,7 +61,7 @@ class Bitnob extends Component {
                     </View>
                     :
                     <SafeAreaView style={{ flex: 1 }} >
-                        <TouchableOpacity style={{alignSelf:'flex-end',marginRight:20,marginTop:10 }} onPress={() => this.props.webViewcallback('close call')} >
+                        <TouchableOpacity style={{alignSelf:'flex-end',marginRight:20,marginTop:10 }} onPress={() => this.props.closeCallback('close call')} >
                             <Image source={require('./helper/close.png')} resizeMode={'contain'} style={{ height: 20, width: 20 }} />
                         </TouchableOpacity>
                         <WebView source={{ uri: this.state.previewLink }}
@@ -80,20 +83,38 @@ class InitiateOauth extends Component {
         this.state = {
             previewLink: "",
             isPreviewLink: true,
-            loader: false
+            loader: false,
         }
     }
     componentDidMount = () => {
         this.setState({ loader: true })
-        const { baseUrl, scope, callbackUrl, successUrl, clientId, redirectUrl, state } = this.props
-        var url=`${baseUrl}/login?scope=${scope}&clientId=${clientId}&redirectUrl=${redirectUrl}&state=${state}`
+        const { mode, scope, callbackUrl, successUrl, clientId, redirectUrl, state } = this.props
+        let finalScope=scope.join(" ")
+        finalScope = encodeURIComponent (finalScope)
+       let baseUrl=mode=='sandbox'?'https://sandbox-oauth.bitnob.co':'https://oauth.bitnob.co'
+
+        var url=`${baseUrl}/login?scope=${finalScope}&clientId=${clientId}&redirectUrl=${redirectUrl}&state=${state}`
+
+        
        this.setState({previewLink:url,loader:false})
     }
     
+
     onNavigationStateChange = (webViewState) => {
         if (webViewState.url.includes("?error=")) {
-            this.props.failCallback("access_denied")
+
+            let regex = /[?&]([^=#]+)=([^&#]*)/g,
+              params = {},
+              match
+            while ((match = regex.exec(webViewState.url))) {
+              params[match[1]] = match[2]
+            }
+            const { error } = params
+
+            this.props.failCallback(params['error'])
+
         } else if (webViewState.url.includes(this.props.redirectUrl) && !webViewState.url.includes("redirectUrl")) {
+            console.log("----Request", this.props.baseUrl)
             this.props.successCallback("success")
         }
   };
@@ -108,7 +129,7 @@ class InitiateOauth extends Component {
                     </View>
                     :
                     <SafeAreaView style={{ flex: 1 }} >
-                        <TouchableOpacity style={{alignSelf:'flex-end',marginRight:20,marginTop:10 }} onPress={() => this.props.webViewcallback('close call')} >
+                        <TouchableOpacity style={{alignSelf:'flex-end',marginRight:20,marginTop:10 }} onPress={() => this.props.closeCallback('close call')} >
                             <Image source={require('./helper/close.png')} resizeMode={'contain'} style={{ height: 20, width: 20 }} />
                         </TouchableOpacity>
                         <WebView
@@ -127,4 +148,4 @@ class InitiateOauth extends Component {
     }
 }
 
-export { Bitnob,InitiateOauth };
+export { InitialCheckout,InitiateOauth };

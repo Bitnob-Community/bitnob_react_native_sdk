@@ -1,6 +1,6 @@
 import { Text, Button, View, StyleSheet, StatusBar, SafeAreaView } from 'react-native'
 import React, { Component } from 'react'
-import {Bitnob,InitiateOauth} from 'bitnob-react-native';
+import {InitialCheckout,InitiateOauth} from 'bitnob-react-native';
 
 export default class App extends Component {
   constructor(props) {
@@ -13,21 +13,21 @@ export default class App extends Component {
 
   createCheckout = () => {
     return (
-      <Bitnob
-        baseUrl={"your base url"}
+      <InitialCheckout
+        mode='sandbox'
         description="test108"
         callbackUrl="test108"
         successUrl=""
         notificationEmail="test@gmail.com"
         customerEmail="test@gmail.com"
         satoshis={2000}
-        reference="test108"
-        publicKey="your public key"
+        reference="test111"
+        publicKey="pk.0331f3a.f860370f9e629806ae72e9280e05d4b9"
         failCallback={(fail) => {
           console.log("------fail", fail)
           this.setState({ isShowBitnob: false })
         }}
-        webViewcallback={(res) => {
+        closeCallback={(res) => {
           this.setState({ isShowBitnob: false })
           console.log('------', res)
         }}
@@ -40,16 +40,22 @@ export default class App extends Component {
   Login = () => {
     return (
       <InitiateOauth
-        baseUrl={"https://staging-oauth.bitnob.co"}
-        clientId="fe2b4768b3c5afdb27b2"
-        scope="user:ln_address"
-        state="dddeee"
+        mode='sandbox'
+        clientId="daec5775a95da44e7bca"
+        scope={[
+      "user:custom_ln_address",
+        "user:verification_level",
+        "user:email",
+        "user:username",
+        "user:ln_address"
+      ]}
+        state="dddeeedfsdggs"
         redirectUrl="https://www.google.com/"
         failCallback={(fail) => {
           console.log("------fail", fail)
           this.setState({ isShowLogin: false })
         }}
-        webViewcallback={(res) => {
+        closeCallback={(res) => {
           this.setState({ isShowLogin: false })
           console.log('------', res)
         }}
@@ -74,14 +80,12 @@ export default class App extends Component {
             :
             <>
             <Button onPress={() => this.setState({ isShowBitnob: true })}
-              style={styles.payButton}
               color={'blue'}
               title="Pay"
                 />
                 <View style={{height:10}} ></View>
                 <Button
                   onPress={() => this.setState({ isShowLogin: true })}
-                  style={styles.payButton}
                   color={'blue'}
                   title="login"
               />
@@ -92,13 +96,3 @@ export default class App extends Component {
     )
   }
 }
-const styles = StyleSheet.create({
-  payButton: {
-    height: 40,
-    width: '20%',
-    borderRadius: 5,
-    backgroundColor: 'blue',
-    alignSelf: 'center',
-    justifyContent: 'center',
-  },
-})
