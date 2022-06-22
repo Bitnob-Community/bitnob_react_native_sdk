@@ -1,6 +1,6 @@
 # bitnob-react-native
 
-This SDK equips online businesses using react native with the ability to accept and process bitcoin payments via on-chain or lightning seamlessly.
+Bitnob SDK allows you to integrate our API features easily, Examples are Checkout, Oauth, etc.
 
 ## ChangeLog
 
@@ -45,41 +45,45 @@ yarn add react-native-webview
 ## How to Use
 
 ```js
-import {InitialCheckout,InitiateOauth} from 'bitnob-react-native';
+import {InitiateCheckout,InitiateOauth} from 'bitnob-react-native';
 ```
 
+## How to get "publicKey" to use bitnob SDK?
 
-## InitialCheckout
+
+- Create a [`Sandbox`](https://sandboxapp.bitnob.co/) or [`Production`](https://app.bitnob.co/) Account, See the keys at Setting > Developers tab, See [`Documentation`](https://docs.bitnob.com/docs/api-keys) for more.
+
+
+## Checkout Example
 ```js
-import {InitialCheckout,InitiateOauth} from 'bitnob-react-native';
+import {InitiateCheckout} from 'bitnob-react-native';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isShowBitnob: false,
-      isShowLogin:false
+      isInitiateCheckout: false
     }
   }
 
-  createCheckout = () => {
+  InitiateCheckout = () => {
     return (
-      <InitialCheckout
+      <InitiateCheckout
         mode='sandbox'
-        description="test108"
-        callbackUrl="test108"
+        description="test"
+        callbackUrl="test"
         successUrl=""
-        notificationEmail="test@gmail.com"
-        customerEmail="test@gmail.com"
+        notificationEmail="customer@gmail.com"
+        customerEmail="customer@gmail.com"
         satoshis={2000}
-        reference="test111"
-        publicKey="pk.0331f3a.f860370f9e629806ae72e9280e05d4b9"
+        reference="test116"
+        publicKey="your public key"
         failCallback={(fail) => {
           console.log("------fail", fail)
-          this.setState({ isShowBitnob: false })
+          this.setState({ isInitiateCheckout: false })
         }}
         closeCallback={(res) => {
-          this.setState({ isShowBitnob: false })
+          this.setState({ isInitiateCheckout: false })
           console.log('------', res)
         }}
         successCallback={(success) => {
@@ -88,58 +92,21 @@ export default class App extends Component {
       />
     )
   }
-  Login = () => {
-    return (
-      <InitiateOauth
-        mode='sandbox'
-        clientId="daec5775a95da44e7bca"
-        scope={[
-      "user:custom_ln_address",
-        "user:verification_level",
-        "user:email",
-        "user:username",
-        "user:ln_address"
-      ]}
-        state="dddeeedfsdggs"
-        redirectUrl="https://www.google.com/"
-        failCallback={(fail) => {
-          console.log("------fail", fail)
-          this.setState({ isShowLogin: false })
-        }}
-        closeCallback={(res) => {
-          this.setState({ isShowLogin: false })
-          console.log('------', res)
-        }}
-        successCallback={(success) => {
-          console.log("----success", success)
-            this.setState({ isShowLogin: false })
-        }}
-      />
-    )
-  }
+  
   render() {
-    let { isShowBitnob,isShowLogin } = this.state
+    let { isInitiateCheckout } = this.state
     return (
       <SafeAreaView style={{ flex: 1, justifyContent: 'center' }} >
         <StatusBar backgroundColor={'transparent'} translucent={false} />
         {
-          isShowBitnob ?
-            this.createCheckout()
-            :
-            isShowLogin ?
-              this.Login()
+          isInitiateCheckout ?
+            this.InitiateCheckout()
             :
             <>
-            <Button onPress={() => this.setState({ isShowBitnob: true })}
+            <Button onPress={() => this.setState({ isInitiateCheckout: true })}
               color={'blue'}
-              title="Pay"
+              title="InitiateCheckout"
                 />
-                <View style={{height:10}} ></View>
-                <Button
-                  onPress={() => this.setState({ isShowLogin: true })}
-                  color={'blue'}
-                  title="login"
-              />
               </>
         }
 
@@ -148,21 +115,97 @@ export default class App extends Component {
   }
 }
 ```
-
 ```
 Note: successUrl keep blank.
 ```
 
-## How to get "publicKey" to use bitnob-react-native?
 
-- Please [`Sign up`](https://app.bitnob.co/accounts/signup) here, Then follow this [`link`](https://docs.bitnob.com/docs/api-keys) to get publicKey.
+## How to get cliendID, scope, state to use bitnob OAuth?
 
-## 📷 Screenshots
+- From your dashboard, create an App in Settings > Developers > Oauth apps to get them, See more in our [`OAuth Documentation`](https://docs.bitnob.com/docs/bitnob-for-business-oauth-20).
+
+
+## OAuth Example
+```js
+import {InitiateOauth} from 'bitnob-react-native';
+
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isInitiateOauth:false
+    }
+  }
+
+ 
+  InitiateOauth = () => {
+    return (
+      <InitiateOauth
+        mode='sandbox'
+        clientId="your clientId"
+        scope={[
+      "user:custom_ln_address",
+        "user:verification_level",
+        "user:email",
+        "user:username",
+        "user:ln_address"
+      ]}
+        state="test"
+        redirectUrl="your redirect url"
+        failCallback={(fail) => {
+          console.log("------fail", fail)
+          this.setState({ isInitiateOauth: false })
+        }}
+        closeCallback={(res) => {
+          this.setState({ isInitiateOauth: false })
+          console.log('------', res)
+        }}
+        successCallback={(success) => {
+          console.log("----success", success)
+            this.setState({ isInitiateOauth: false })
+        }}
+      />
+    )
+  }
+  render() {
+    let {isInitiateOauth } = this.state
+    return (
+      <SafeAreaView style={{ flex: 1, justifyContent: 'center' }} >
+        <StatusBar backgroundColor={'transparent'} translucent={false} />
+        {
+            isInitiateOauth ?
+              this.InitiateOauth()
+            :
+            <>
+                <Button
+                  onPress={() => this.setState({ isInitiateOauth: true })}
+                  color={'blue'}
+                  title="InitiateOauth"
+              />
+              </>
+        }
+
+      </SafeAreaView>
+    )
+  }
+}
+
+```
+
+## 📷 Checkout Screenshots
 
 | Platform | Screenshot |
 | ------------- | ------------- |
 | Android | <img height="480" src="https://bitnobwhmcsplugin.s3.eu-west-2.amazonaws.com/images/android_checkout.png"> <img height="480" src="https://bitnobwhmcsplugin.s3.eu-west-2.amazonaws.com/images/android_payment_success.png"> <img height="480" src="https://bitnobwhmcsplugin.s3.eu-west-2.amazonaws.com/images/android_timeout.png"> |
 | iOS | <img height="414" src="https://bitnobwhmcsplugin.s3.eu-west-2.amazonaws.com/images/ios_checkout.png"> <img height="414" src="https://bitnobwhmcsplugin.s3.eu-west-2.amazonaws.com/images/ios_payment_success.png">  <img height="414" src="https://bitnobwhmcsplugin.s3.eu-west-2.amazonaws.com/images/ios_timeout1.png"> |
+
+
+## 📷 OAuth Screenshots
+
+| Platform | Screenshot |
+| ------------- | ------------- |
+| Android | <img height="480" src="https://js.bitnob.co/assets/android_oauth.png"> <img height="480" src="https://js.bitnob.co/assets/android_oauth_authorize.png"> |
+| iOS | <img height="414" src="https://www.js.bitnob.co/assets/ios_oauth.PNG"> <img height="414" src="https://www.js.bitnob.co/assets/ios_oauth_authorize.PNG"> |
 
 # License
 ```

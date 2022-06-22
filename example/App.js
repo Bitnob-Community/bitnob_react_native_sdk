@@ -1,34 +1,34 @@
 import { Text, Button, View, StyleSheet, StatusBar, SafeAreaView } from 'react-native'
 import React, { Component } from 'react'
-import {InitialCheckout,InitiateOauth} from 'bitnob-react-native';
+import {InitiateCheckout,InitiateOauth} from 'bitnob-react-native';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isShowBitnob: false,
-      isShowLogin:false
+      isInitiateCheckout: false,
+      isInitiateOauth:false
     }
   }
 
-  createCheckout = () => {
+  InitiateCheckout = () => {
     return (
-      <InitialCheckout
+      <InitiateCheckout
         mode='sandbox'
-        description="test108"
-        callbackUrl="test108"
+        description="test"
+        callbackUrl="test"
         successUrl=""
-        notificationEmail="test@gmail.com"
-        customerEmail="test@gmail.com"
+        notificationEmail="customer@gmail.com"
+        customerEmail="customer@gmail.com"
         satoshis={2000}
-        reference="test111"
-        publicKey="pk.0331f3a.f860370f9e629806ae72e9280e05d4b9"
+        reference="test116"
+        publicKey="your public key"
         failCallback={(fail) => {
           console.log("------fail", fail)
-          this.setState({ isShowBitnob: false })
+          this.setState({ isInitiateCheckout: false })
         }}
         closeCallback={(res) => {
-          this.setState({ isShowBitnob: false })
+          this.setState({ isInitiateCheckout: false })
           console.log('------', res)
         }}
         successCallback={(success) => {
@@ -37,11 +37,11 @@ export default class App extends Component {
       />
     )
   }
-  Login = () => {
+  InitiateOauth = () => {
     return (
       <InitiateOauth
         mode='sandbox'
-        clientId="daec5775a95da44e7bca"
+        clientId="your clientId"
         scope={[
       "user:custom_ln_address",
         "user:verification_level",
@@ -49,45 +49,45 @@ export default class App extends Component {
         "user:username",
         "user:ln_address"
       ]}
-        state="dddeeedfsdggs"
-        redirectUrl="https://www.google.com/"
+        state="test"
+        redirectUrl="your redirect url"
         failCallback={(fail) => {
           console.log("------fail", fail)
-          this.setState({ isShowLogin: false })
+          this.setState({ isInitiateOauth: false })
         }}
         closeCallback={(res) => {
-          this.setState({ isShowLogin: false })
+          this.setState({ isInitiateOauth: false })
           console.log('------', res)
         }}
         successCallback={(success) => {
           console.log("----success", success)
-            this.setState({ isShowLogin: false })
+            this.setState({ isInitiateOauth: false })
         }}
       />
     )
   }
   render() {
-    let { isShowBitnob,isShowLogin } = this.state
+    let { isInitiateCheckout,isInitiateOauth } = this.state
     return (
       <SafeAreaView style={{ flex: 1, justifyContent: 'center' }} >
         <StatusBar backgroundColor={'transparent'} translucent={false} />
         {
-          isShowBitnob ?
-            this.createCheckout()
+          isInitiateCheckout ?
+            this.InitiateCheckout()
             :
-            isShowLogin ?
-              this.Login()
+            isInitiateOauth ?
+              this.InitiateOauth()
             :
             <>
-            <Button onPress={() => this.setState({ isShowBitnob: true })}
+            <Button onPress={() => this.setState({ isInitiateCheckout: true })}
               color={'blue'}
-              title="Pay"
+              title="InitiateCheckout"
                 />
                 <View style={{height:10}} ></View>
                 <Button
-                  onPress={() => this.setState({ isShowLogin: true })}
+                  onPress={() => this.setState({ isInitiateOauth: true })}
                   color={'blue'}
-                  title="login"
+                  title="InitiateOauth"
               />
               </>
         }

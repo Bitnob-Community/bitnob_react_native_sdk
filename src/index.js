@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { _apiCallForCheckPaymentStatus, _apicallForPayMent } from './utils/APIs'
 import WebView from 'react-native-webview'
 
-class InitialCheckout extends Component {
+class InitiateCheckout extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -34,7 +34,7 @@ class InitialCheckout extends Component {
     }
     _apiCallForCheckPayment = (id) => {
         const { mode } = this.props
-        let baseUrl = mode == 'sandbox' ? 'https://staging-oauth.bitnob.co' : 'https://staging-oauth.bitnob.co'
+        let baseUrl=mode=='sandbox'?'https://sandboxapi.bitnob.co':'https://api.bitnob.co'
         let myInterval = setInterval(() => {
             if (this.state.isPreviewLink) {
                 _apiCallForCheckPaymentStatus(baseUrl, id, (res) => {
@@ -114,7 +114,6 @@ class InitiateOauth extends Component {
             this.props.failCallback(params['error'])
 
         } else if (webViewState.url.includes(this.props.redirectUrl) && !webViewState.url.includes("redirectUrl")) {
-            console.log("----Request", this.props.baseUrl)
             this.props.successCallback("success")
         }
   };
@@ -148,4 +147,4 @@ class InitiateOauth extends Component {
     }
 }
 
-export { InitialCheckout,InitiateOauth };
+export { InitiateCheckout,InitiateOauth };

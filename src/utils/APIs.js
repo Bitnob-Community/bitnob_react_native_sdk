@@ -24,6 +24,8 @@ const _apicallForPayMent = async (baseUrl, description, callbackUrl, successUrl,
 const _apiCallForCheckPaymentStatus = async (baseUrl, id, callback) => {
     var url = `${baseUrl}/api/v1/checkout-inline/status/${id}`
 
+
+
     await fetch(url, {
         method: 'GET',
         headers: {
@@ -32,6 +34,7 @@ const _apiCallForCheckPaymentStatus = async (baseUrl, id, callback) => {
 
     }).then((response) => response.json())
         .then((response) => {
+
             if (response?.status) {
                 return callback(response)
             } else {
