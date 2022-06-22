@@ -1,7 +1,7 @@
 {
   "name": "bitnob-react-native",
   "version": "0.0.3",
-  "description": "Bitnob SDK allows you to integrate our API features easily, Examples are Checkout, Oauth, etc.",
+  "description": "Bitnob SDK equips online businesses using react native with the ability to integrate our API features easily",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
