@@ -39,10 +39,10 @@ yarn add react-native-webview
 |   ✔️    | ✔️  |  
 
 ## ⚙️ Android Setup
-    No any requirement
+    No requirement
 
 ## ⚙️ Ios Setup
-    No any requirement
+    No requirement
 
 ## How to Use
 
