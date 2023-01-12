@@ -1,13 +1,14 @@
 import { Text, Button, View, StyleSheet, StatusBar, SafeAreaView } from 'react-native'
 import React, { Component } from 'react'
-import {InitiateCheckout,InitiateOauth} from 'bitnob-react-native';
+import {InitiateCheckout,InitiateOauth,BitnobTransfer} from 'bitnob-react-native';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isInitiateCheckout: false,
-      isInitiateOauth:false
+      isInitiateOauth: false,
+      isBitnobTransfer: false
     }
   }
 
@@ -43,12 +44,12 @@ export default class App extends Component {
         mode='sandbox'
         clientId="your clientId"
         scope={[
-      "user:custom_ln_address",
-        "user:verification_level",
-        "user:email",
-        "user:username",
-        "user:ln_address"
-      ]}
+          "user:custom_ln_address",
+          "user:verification_level",
+          "user:email",
+          "user:username",
+          "user:ln_address"
+        ]}
         state="test"
         redirectUrl="your redirect url"
         failCallback={(fail) => {
@@ -61,13 +62,31 @@ export default class App extends Component {
         }}
         successCallback={(success) => {
           console.log("----success", success)
-            this.setState({ isInitiateOauth: false })
+          this.setState({ isInitiateOauth: false })
+        }}
+      />
+    )
+  }
+  BitnobTransfer = () => {
+    return (
+      <BitnobTransfer
+        mode='sandbox'
+        senderName="dipak"
+        publicKey="pk.0331f3a.f860370f9e629806ae72e9280e05d4b9"
+        redirectUrl="https://www.google.com/"
+        closeCallback={(res) => {
+          console.log('------', res)
+          this.setState({ isBitnobTransfer: false })
+        }}
+        successCallback={(success) => {
+          console.log("----success", success)
+          this.setState({ isBitnobTransfer: false })
         }}
       />
     )
   }
   render() {
-    let { isInitiateCheckout,isInitiateOauth } = this.state
+    let { isInitiateCheckout, isInitiateOauth, isBitnobTransfer } = this.state
     return (
       <SafeAreaView style={{ flex: 1, justifyContent: 'center' }} >
         <StatusBar backgroundColor={'transparent'} translucent={false} />
@@ -77,19 +96,28 @@ export default class App extends Component {
             :
             isInitiateOauth ?
               this.InitiateOauth()
-            :
-            <>
-            <Button onPress={() => this.setState({ isInitiateCheckout: true })}
-              color={'blue'}
-              title="InitiateCheckout"
-                />
-                <View style={{height:10}} ></View>
-                <Button
-                  onPress={() => this.setState({ isInitiateOauth: true })}
-                  color={'blue'}
-                  title="InitiateOauth"
-              />
-              </>
+              :
+              isBitnobTransfer ?
+                this.BitnobTransfer()
+                :
+                <>
+                  <Button onPress={() => this.setState({ isInitiateCheckout: true })}
+                    color={'blue'}
+                    title="InitiateCheckout"
+                  />
+                  <View style={{ height: 10 }} ></View>
+                  <Button
+                    onPress={() => this.setState({ isInitiateOauth: true })}
+                    color={'blue'}
+                    title="InitiateOauth"
+                  />
+                  <View style={{ height: 10 }} ></View>
+                  <Button
+                    onPress={() => this.setState({ isBitnobTransfer: true })}
+                    color={'blue'}
+                    title="BitnobTransfer"
+                  />
+                </>
         }
 
       </SafeAreaView>
