@@ -194,6 +194,62 @@ export default class App extends Component {
 
 ```
 
+## Transfer Example
+```js
+import {BitnobTransfer} from 'bitnob-react-native';
+
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isBitnobTransfer:false
+    }
+  }
+
+ 
+  BitnobTransfer = () => {
+    return (
+      <BitnobTransfer
+        mode='sandbox'
+        senderName="sender Name"
+        publicKey="your public key"
+        redirectUrl="your redirect url"
+        closeCallback={(res) => {
+          console.log('------', res)
+          this.setState({ isBitnobTransfer: false })
+        }}
+        successCallback={(success) => {
+          console.log("----success", success)
+          this.setState({ isBitnobTransfer: false })
+        }}
+      />
+    )
+  }
+  render() {
+    let {isBitnobTransfer } = this.state
+    return (
+      <SafeAreaView style={{ flex: 1, justifyContent: 'center' }} >
+        <StatusBar backgroundColor={'transparent'} translucent={false} />
+        {
+            isBitnobTransfer ?
+              this.BitnobTransfer()
+            :
+            <>
+                <Button
+                  onPress={() => this.setState({ isBitnobTransfer: true })}
+                  color={'blue'}
+                  title="BitnobTransfer"
+              />
+              </>
+        }
+
+      </SafeAreaView>
+    )
+  }
+}
+
+```
+
 ## 📷 Checkout Screenshots
 
 | Platform | Screenshot |
@@ -208,6 +264,15 @@ export default class App extends Component {
 | ------------- | ------------- |
 | Android | <img height="480" src="https://js.bitnob.co/assets/android_oauth.png"> <img height="480" src="https://js.bitnob.co/assets/android_oauth_authorize.png"> |
 | iOS | <img height="414" src="https://www.js.bitnob.co/assets/ios_oauth.PNG"> <img height="414" src="https://www.js.bitnob.co/assets/ios_oauth_authorize.PNG"> |
+
+
+## 📷 Transfer Screenshots
+
+| Platform | Screenshot |
+| ------------- | ------------- |
+| Android | <img height="480" src="https://www.js.bitnob.co/assets/transfers_sdk/android/1.png"> <img height="480" src="https://www.js.bitnob.co/assets/transfers_sdk/android/2.png"> <img height="480" src="https://www.js.bitnob.co/assets/transfers_sdk/android/3.png"> <img height="480" src="https://www.js.bitnob.co/assets/transfers_sdk/android/4.png"> |
+| iOS | <img height="480" src="https://www.js.bitnob.co/assets/transfers_sdk/ios/1.png"> <img height="480" src="https://www.js.bitnob.co/assets/transfers_sdk/ios/2.png"> <img height="480" src="https://www.js.bitnob.co/assets/transfers_sdk/ios/3.png"> <img height="480" src="https://www.js.bitnob.co/assets/transfers_sdk/ios/4.png"> |
+
 
 # License
 ```

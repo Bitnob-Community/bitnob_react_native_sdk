@@ -1,6 +1,6 @@
 {
   "name": "bitnob-react-native",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Bitnob SDK equips online businesses using react native with the ability to integrate our API features easily",
   "main": "src/index.js",
   "scripts": {
